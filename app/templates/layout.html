@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Regression | {% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/bootstrap.min.css') }}" />
+  <!-- Bootstrap 4  -->
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='../static/css/all.min.css') }}" />
+
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand mb-0 h1" href="/">Flask Regression</a>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="http://www.github.com/mmenschig" target="_blank"><i class="fab fa-github"></i> dev</a>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

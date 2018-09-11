@@ -1,0 +1,12 @@
+# virtual environment
+/env
+
+# python compiled files and directories
+/__pycache__
+*.pyc
+
+# vscode settings
+/.vscode
+
+# macOS files
+*.DS_Store
