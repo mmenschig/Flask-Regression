@@ -1,4 +1,4 @@
 # Flask-Regression
  A simple flask application that allows you to generate linear and exponential multiple regression models
 
-#### Demo application hosted at ...
+#### Demo application hosted at http://flask-regression.herokuapp.com/
