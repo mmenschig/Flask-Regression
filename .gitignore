@@ -10,3 +10,7 @@
 
 # macOS files
 *.DS_Store
+
+# Uploaded files
+app/uploads/*.csv
+app/uploads/*.txt
