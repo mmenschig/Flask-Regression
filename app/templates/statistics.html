@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block title %}Chart{% endblock %}
+
+{% block content %}
+<img src="{{ url_for('chart', chartId=chartId) }}" alt="placeholder">
+{% endblock %}
