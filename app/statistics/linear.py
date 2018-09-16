@@ -1,11 +1,8 @@
-from sys import platform
-
-# For macOS, we call a different rendering backend
+# For macOS (and heroku), we call a different rendering backend
 # for matplotlib. This call needs to precede all
 # import of all other rendering libraries.
-if platform == 'darwin':
-    import matplotlib as mpl
-    mpl.use('Agg')
+import matplotlib as mpl
+mpl.use('Agg')
 
 import numpy as np
 import pandas as pd
