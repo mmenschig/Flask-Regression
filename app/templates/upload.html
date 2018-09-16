@@ -13,29 +13,39 @@ New Model
       </div>
   </div>
 
-  <form action="/upload" method="POST">
+  <div class="form-group row" role="alert">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+      <div class="col-sm-12 alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>
+
+  <form action="" method="POST" enctype="multipart/form-data">
     <div class="form-group row">
       <label for="yAxisLabel" class="col-sm-2 col-form-label">Y-Axis Label</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="yAxisLabel" placeholder="Y-Axis">
+        <input type="text" class="form-control" name="yAxisLabel" value="Y-Axis">
       </div>
     </div>
     <div class="form-group row">
       <label for="xAxisLabel" class="col-sm-2 col-form-label">X-Axis Label</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="xAxisLabel" placeholder="X-Axis">
+        <input type="text" class="form-control" name="xAxisLabel" value="X-Axis">
       </div>
     </div>
     <fieldset class="form-group">
       <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Regression Type</legend>
+        <legend class="col-form-label col-sm-2 pt-0">Regression Method</legend>
         <div class="col-sm-10">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="modelRadios" id="linearCheck" value="Linear" checked>
+            <input class="form-check-input" type="radio" name="methodRadios" id="linearCheck" value="Linear" checked>
             <label class="form-check-label" for="linearCheck">Linear</label>
           </div>
           <div class="form-check">
-              <input class="form-check-input" type="radio" name="modelRadios" id="exponentialCheck" value="Exponential">
+              <input disabled class="form-check-input" type="radio" name="methodRadios" id="exponentialCheck" value="Exponential">
               <label class="form-check-label" for="exponentialCheck">Exponential</label>
             </div>
         </div>
@@ -44,40 +54,64 @@ New Model
     <div class="form-group row">
       <label for="confidenceInterval" class="col-sm-2 col-form-label">Confidence Interval</label>
       <div class="col-sm-10">
-        <select id="confidenceInterval" class="form-control">
-          <option>85%</option>
-          <option>86%</option>
-          <option>87%</option>
-          <option>88%</option>
-          <option>89%</option>
-          <option selected>90%</option>
-          <option>91%</option>
-          <option>92%</option>
-          <option>93%</option>
-          <option>94%</option>
-          <option>95%</option>
-          <option>96%</option>
-          <option>97%</option>
-          <option>98%</option>
-          <option>99%</option>
+        <select disabled name="confidenceInterval" class="form-control">
+          <option value="85">85%</option>
+          <option value="86">86%</option>
+          <option value="87">87%</option>
+          <option value="88">88%</option>
+          <option value="89">89%</option>
+          <option value="90">90%</option>
+          <option value="91">91%</option>
+          <option value="92">92%</option>
+          <option value="93">93%</option>
+          <option value="94">94%</option>
+          <option selected value="95">95%</option>
+          <option value="96">96%</option>
+          <option value="97">97%</option>
+          <option value="98">98%</option>
+          <option value="99">99%</option>
         </select>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputFile" class="col-sm-2 col-form-label">Data File</label>
       <div class="col-sm-10">
-        <input type="file" class="form-control-file" id="inputFile">
-        <p class="text-muted"><small>Allowed file extensions: .csv and .txt</small></p>
+        <input type="file" class="form-control-file" name="inputFile">
+        <small class="form-text text-muted">Supported extensionss: .csv and .txt</small>
       </div>
     </div>
     <div class="form-group row">
-        <div class="col-sm-2">
-          <button disabled type="submit" class="btn btn-primary btn-block">Create</button>
+        <div class="col-sm-2">Header Options</div>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <input disabled class="form-check-input" type="checkbox" name="ignoreHeaderCheck">
+            <label class="form-check-label" for="ignoreHeaderCheck">
+              Ignore Header Row
+            </label>
+          </div>
         </div>
-        <div class="col-sm-2">
-          <a role="button" class="btn btn-warning btn-block" href="/">Cancel</a>
-        </div>
+    </div>
+    <div class="form-group row">
+      <label for="fieldSeparator" class="col-sm-2 col-form-label">Field Separator</label>
+      <div class="col-sm-10">
+        <select disabled name="fieldSeparator" class="form-control">
+          <option value=";">;</option>
+          <option value=",">,</option>
+          <option value="|">|</option>
+          <option value="\t">tab</option>
+          <option value="^">^</option>
+          <option value=".">.</option>
+        </select>
       </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2">
+        <button type="submit" class="btn btn-primary btn-block">Create</button>
+      </div>
+      <div class="col-sm-2">
+        <a role="button" class="btn btn-warning btn-block" href="/">Cancel</a>
+      </div>
+    </div>
   </form>
 
 
