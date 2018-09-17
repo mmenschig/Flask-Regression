@@ -1,5 +1,6 @@
 
 import os
+import json
 from flask import Flask
 from flask import request, render_template, flash, redirect, url_for, send_file
 from time import time
@@ -52,6 +53,12 @@ def chart(chartId):
     path = 'charts/{}.png'.format(chartId)
     return send_file(path, mimetype='image/png')
 
+@app.route('/changelog')
+def changelog():
+    # Load Changelog.json and pass to template
+    with open('app/changelog.json', 'r') as f:
+        changelog=json.load(f)
+        return render_template('changelog.html', changelog=changelog)
 
 # Error Handlers
 @app.errorhandler(404)
