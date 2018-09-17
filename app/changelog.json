@@ -1,0 +1,9 @@
+[
+  {
+    "version": "0.1.0",
+    "date": "2018-09-16",
+    "changes": [
+      { "message": "Initial release. Able to generate basic charts based on data file. The data file currently does NOT support a header row." }
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Changelog{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Changelog</h1>
+      <p class="lead">All changes to the application are listed here.</p>
+    </div>
+</div>
+
+{% if changelog %}
+  {% for change in changelog %}
+
+  <div class="card text-white bg-secondary">
+    <div class="card-header">version {{ change.version }}</div>
+    <div class="card-body">
+      <h5 class="card-title">{{ change.date }}</h5>
+      <ul>
+          {% for message in change.changes %}
+          <li class="card-text">{{ message.message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  {% endfor %}
+{% else %}
+  <p>Can't locate changelog!</p>
+{% endif %}
+{% endblock %}
