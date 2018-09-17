@@ -23,17 +23,27 @@ New Model
     {% endwith %}
   </div>
 
+  <div class="alert alert-warning" role="alert">
+    <strong>Note:</strong> This feature is still in development. Come back later and check the <a class="alert-link" href="/changelog">changelog</a> often.
+  </div>
+
   <form action="" method="POST" enctype="multipart/form-data">
+    <div class="form-group row">
+      <label for="chartTitle" class="col-sm-2 col-form-label">Chart Title</label>
+      <div class="col-sm-10">
+        <input disabled type="text" class="form-control" name="chartTitle" placeholder="Chart title goes here">
+      </div>
+    </div>
     <div class="form-group row">
       <label for="yAxisLabel" class="col-sm-2 col-form-label">Y-Axis Label</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="yAxisLabel" value="Y-Axis">
+        <input disabled type="text" class="form-control" name="yAxisLabel" placeholder="Enter y-axis label">
       </div>
     </div>
     <div class="form-group row">
       <label for="xAxisLabel" class="col-sm-2 col-form-label">X-Axis Label</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="xAxisLabel" value="X-Axis">
+        <input disabled type="text" class="form-control" name="xAxisLabel" placeholder="Enter x-axis label">
       </div>
     </div>
     <fieldset class="form-group">
@@ -95,8 +105,8 @@ New Model
       <label for="fieldSeparator" class="col-sm-2 col-form-label">Field Separator</label>
       <div class="col-sm-10">
         <select disabled name="fieldSeparator" class="form-control">
+          <option selected value=",">,</option>
           <option value=";">;</option>
-          <option value=",">,</option>
           <option value="|">|</option>
           <option value="\t">tab</option>
           <option value="^">^</option>
