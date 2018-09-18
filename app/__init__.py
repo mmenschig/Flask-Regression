@@ -23,6 +23,15 @@ def index():
 def upload():
     # flash(message="Invalid form", category="alert-danger")
     if request.method == 'POST':
+
+        # Grabbing form input
+        request_body = {}
+        request_body["chart_title"] = request.form["chartTitle"]
+        request_body["y_axis_label"] = request.form["yAxisLabel"]
+        request_body["x_axis_label"] = request.form["xAxisLabel"]
+        request_body["field_separator"] = request.form["fieldSeparator"]
+
+
         file = request.files['inputFile']
         # TODO: flash message if file not provided
 
@@ -36,7 +45,7 @@ def upload():
             filename = "{}_{}".format(timestamp,secure_filename(file.filename)) # Make this unix timestamp
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # TODO: call chart creation here
-            linear.main(timestamp=timestamp, filename=filename)
+            linear.main(timestamp=timestamp, filename=filename, request_body=request_body)
             return redirect(url_for('statistics', chartId=timestamp))
             # TODO: after upload, we need to generate chart, and redirect to chart-url
     # GET Method
