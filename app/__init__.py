@@ -26,10 +26,9 @@ def index():
 def upload():
     # flash(message="Invalid form", category="alert-danger")
     if request.method == 'POST':
-
-        # Parsing form
+        # Parsing form data
         request_body = {}
-        request_body["chart_title"] = request.form["chartTitle"]
+        request_body["chart_title"] = request.form["chartTitle"] or ''
 
         try:
             file = request.files['inputFile']
