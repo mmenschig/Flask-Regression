@@ -11,21 +11,19 @@ New Model
         <h1 class="display-4">New Regression Model</h1>
         <p class="lead">Create a new regression model and select a variety of options. </p>
       </div>
+    </div>
+
+  <div class="alert alert-warning" role="alert">
+    <strong>Note:</strong> This feature is still in development. Come back later and check the <a class="alert-link" href="/changelog">changelog</a> often.
   </div>
 
-  <div class="form-group row" role="alert">
-    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
       <div class="col-sm-12 alert {{ category }}">{{ message }}</div>
       {% endfor %}
     {% endif %}
-    {% endwith %}
-  </div>
-
-  <div class="alert alert-warning" role="alert">
-    <strong>Note:</strong> This feature is still in development. Come back later and check the <a class="alert-link" href="/changelog">changelog</a> often.
-  </div>
+  {% endwith %}
 
   <form action="" method="POST" enctype="multipart/form-data">
     <div class="form-group row">

@@ -4,7 +4,8 @@
     "date": "2018-09-17",
     "changes": [
       { "message": "Updated form to allow adding a chart title"},
-      { "message": "Updated regression model to show confidence interval and regression line. Also adjusted chart colors to aling them with application."}
+      { "message": "Updated regression model to show confidence interval and regression line. Also adjusted chart colors to aling them with application."},
+      { "message": "Form now provides basic error messages when not providing mandatory user input."}
     ]
   },
   {

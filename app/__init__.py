@@ -1,19 +1,22 @@
 
+# TODO: implement logging
+
 import os
 import json
 from flask import Flask
-from flask import request, render_template, flash, redirect, url_for, send_file
+from flask import request, render_template, flash, redirect, url_for, send_file, Markup
 from time import time
 from werkzeug.utils import secure_filename
-from app.utils.helpers import allowed_file
 
+# Custom packages
+from app.utils.helpers import allowed_file
 from app.statistics import linear
 
-
+# Instantiating app
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.pardir, 'config.py'))
 
-
+# Definitions of Routes
 @app.route('/')
 @app.route('/index')
 def index():
@@ -24,30 +27,29 @@ def upload():
     # flash(message="Invalid form", category="alert-danger")
     if request.method == 'POST':
 
-        # Grabbing form input
+        # Parsing form
         request_body = {}
         request_body["chart_title"] = request.form["chartTitle"]
-        request_body["y_axis_label"] = request.form["yAxisLabel"]
-        request_body["x_axis_label"] = request.form["xAxisLabel"]
-        request_body["field_separator"] = request.form["fieldSeparator"]
 
+        try:
+            file = request.files['inputFile']
+        except KeyError:
+            msg = Markup("<strong>Error:</strong> No file selected. Please provide a data file.")
+            flash(msg, category='alert-danger')
+            # TODO: log e to file
+            return redirect(request.url)
 
-        file = request.files['inputFile']
-        # TODO: flash message if file not provided
-
-        # TODO: fix message flashing
-        if file.filename == '':
-            flash('No selected file')
+        if file.filename == '' or not allowed_file(file.filename):
+            msg = Markup("<strong>Error:</strong> Invalid file name. Please provide either .csv or .txt")
+            flash(msg, category="alert-danger")
             return redirect(request.url)
 
         if file and allowed_file(file.filename):
             timestamp = int(round(time() * 1000))
             filename = "{}_{}".format(timestamp,secure_filename(file.filename)) # Make this unix timestamp
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # TODO: call chart creation here
             linear.main(timestamp=timestamp, filename=filename, request_body=request_body)
             return redirect(url_for('statistics', chartId=timestamp))
-            # TODO: after upload, we need to generate chart, and redirect to chart-url
     # GET Method
     return render_template("upload.html")
 
