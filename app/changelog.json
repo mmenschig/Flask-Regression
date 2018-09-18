@@ -1,17 +1,18 @@
 [
   {
-    "version": "0.1.0",
-    "date": "2018-09-16",
-    "changes": [
-      { "message": "Initial release. Able to generate basic charts based on data file. The data file currently does NOT support a header row." }
-    ]
-  },
-  {
     "version": "0.1.1",
     "date": "2018-09-17",
     "changes": [
       { "message": "Updated form to allow adding a chart title"},
       { "message": "Updated regression model to show confidence interval and regression line. Also adjusted chart colors to aling them with application."}
     ]
+  },
+  {
+    "version": "0.1.0",
+    "date": "2018-09-16",
+    "changes": [
+      { "message": "Initial release. Able to generate basic charts based on data file. The data file currently does NOT support a header row." }
+    ]
   }
+
 ]
