@@ -1,10 +1,12 @@
-
 # TODO: implement logging
 
 import os
 import json
 from flask import Flask
-from flask import request, render_template, flash, redirect, url_for, send_file, Markup
+from flask import request, render_template, flash, redirect, url_for, \
+                  send_file, Markup, session
+from flask_mail import Mail, Message
+import asyncio
 from time import time
 from werkzeug.utils import secure_filename
 
@@ -15,6 +17,18 @@ from app.statistics import linear
 # Instantiating app
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.pardir, 'config.py'))
+
+mail = Mail(app)
+
+# TODO: move to mail module
+async def send_email(recipients):
+    """ Sends stats information to user. """
+    with app.app_context():
+        msg = Message("Upload",
+            sender="marian.menschig@googlemail.com",
+            recipients=recipients)
+
+    mail.send(msg)
 
 # Definitions of Routes
 @app.route('/')
@@ -27,15 +41,21 @@ def upload():
     # flash(message="Invalid form", category="alert-danger")
     if request.method == 'POST':
         # Parsing form data
-        request_body = {}
-        request_body["chart_title"] = request.form["chartTitle"] or ''
+        session['formdata'] = {}
+        # request_body = {}
+        # request_body["chart_title"] = request.form["chartTitle"] or ''
+
+        session['formdata']['chart_title'] = request.form['chartTitle']
+
+        print(session)
 
         try:
             file = request.files['inputFile']
         except KeyError:
             msg = Markup("<strong>Error:</strong> No file selected. Please provide a data file.")
             flash(msg, category='alert-danger')
-            # TODO: log e to file
+
+            # TODO: log error to file
             return redirect(request.url)
 
         if file.filename == '' or not allowed_file(file.filename):
@@ -43,24 +63,36 @@ def upload():
             flash(msg, category="alert-danger")
             return redirect(request.url)
 
+        # All tests passed, we will save the file
         if file and allowed_file(file.filename):
             timestamp = int(round(time() * 1000))
-            filename = "{}_{}".format(timestamp,secure_filename(file.filename)) # Make this unix timestamp
+            ext = os.path.splitext(file.filename)[1]
+
+            session['formdata']['timestamp'] = timestamp
+            session['formdata']['file_extension'] = ext
+
+            filename = "{}{}".format(timestamp, ext)
+            session['formdata']['file_name'] = filename
+            # print("Filename: ", filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            linear.main(timestamp=timestamp, filename=filename, request_body=request_body)
-            return redirect(url_for('statistics', chartId=timestamp))
-    # GET Method
+
+            return redirect(url_for('statistics', timestamp=timestamp))
+    # On GET Method
     return render_template("upload.html")
 
 
-@app.route('/statistics/<int:chartId>', methods=['GET'])
-def statistics(chartId):
-    return render_template("statistics.html", chartId=chartId)
+@app.route('/statistics/<int:timestamp>', methods=['GET'])
+def statistics(timestamp):
+
+    linear.main(timestamp=timestamp, request_body=session['formdata'])
+
+    # asyncio.run(send_email(['email@googlemail.com']))
+    return render_template("statistics.html", timestamp=timestamp)
 
 
-@app.route('/chart/<int:chartId>', methods=['GET'])
-def chart(chartId):
-    path = 'charts/{}.png'.format(chartId)
+@app.route('/chart/<int:timestamp>', methods=['GET'])
+def chart(timestamp):
+    path = 'charts/{}.png'.format(timestamp)
     return send_file(path, mimetype='image/png')
 
 @app.route('/changelog')
@@ -69,6 +101,14 @@ def changelog():
     with open('app/changelog.json', 'r') as f:
         changelog=json.load(f)
         return render_template('changelog.html', changelog=changelog)
+
+@app.route('/examples')
+def examples():
+    return render_template('examples.html')
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
 
 # Error Handlers
 @app.errorhandler(404)
