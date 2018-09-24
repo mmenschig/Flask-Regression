@@ -10,8 +10,7 @@
     OLS Regression
   </div>
   <div class="card-body">
-    <h5 class="card-title">Your chart</h5>
-      <img src="{{ url_for('chart', chartId=chartId) }}" alt="placeholder">
+      <img src="{{ url_for('chart', timestamp=timestamp) }}" alt="placeholder">
       <div class="row">
         <div class="col-sm-3">
           <button disabled href="#" class="btn btn-primary btn-block">Email this page</button>
@@ -22,10 +21,5 @@
       </div>
     </div>
   </div>
-
-{# TODO: provide a button for saving the figure #}
-
-<div class="container">
-</div>
 
 {% endblock %}

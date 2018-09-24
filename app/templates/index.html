@@ -4,11 +4,40 @@
 
 {% block content %}
 
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Simple Regression</h1>
+      <p class="lead">Welcome to Simple Regression. Please select an option below or use the navbar above.</p>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card text-white bg-primary">
+      <div class="card-body">
+        <h5 class="card-title">New Regression Model</h5>
+        <p class="card-text">Upload a new data file and create a regression model.</p>
+        <a href="/upload" class="btn btn-primary">Create model</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">View Changelog</h5>
+        <p class="card-text">View all changes made to the application.</p>
+        <a href="/changelog" class="btn btn-primary">View Changelog</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{#
 <div class="row offset-md-3">
   <div class="col-md-6">
     <a class="btn btn-primary btn-block" href="/upload"><i class="far fa-chart-bar"></i> New Regression</a>
     <a class="btn btn-outline-primary btn-block" href="/changelog"><i class="fas fa-history"></i> Changelog</a>
   </div>
 </div>
-
+#}
 {% endblock %}
