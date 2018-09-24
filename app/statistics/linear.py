@@ -12,8 +12,8 @@ import statsmodels.api as sm
 
 # TODO: accept additional parameters passed from form input
 # TODO: get filename path from config
-def main(timestamp, filename, request_body):
-    path = 'app/uploads/{}'.format(filename)
+def main(timestamp, request_body):
+    path = 'app/uploads/{}'.format(request_body['file_name'])
     df = pd.read_csv(path, header=None, sep=",", names=['x', 'y'])
 
     y = df['y'].values
@@ -64,3 +64,4 @@ def main(timestamp, filename, request_body):
     ax.fill_between(x_pred, lower, upper, color='powderblue', alpha=0.3)
     # Save chart
     fig.savefig(save_path, dpi=125)
+    return fitted.summary()
