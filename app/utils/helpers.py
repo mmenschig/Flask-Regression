@@ -1,5 +1,7 @@
+
 from time import time
 from config import ALLOWED_EXTENSIONS
+
 
 def allowed_file(filename):
     """
